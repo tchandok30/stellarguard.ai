@@ -1,45 +1,290 @@
 ---
-import DefaultLayout from '../layouts/DefaultLayout.astro'
-import DashboardWidget from '../components/DashboardWidget.astro';
 ---
+<head>
+  <meta charset="UTF-8" />
+  <title>StellarGuard AI Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
 
-<DefaultLayout title="Dashboard">
-  <section>
-    <h1>Welcome Astronaut 🧑‍🚀</h1><br>
-    <p class="size-20">Build fast dashboards, faster (and accessible).</p>
-  </section>
-  <section class="margin-32">
-    <div class="space-content">
-      <div class="contents">
-        <h2>Widgets</h2>
-        <p id="current-time" class="size-12"></p>
-      </div>
-      <div class="grid small-grid-1 medium-grid-2 large-grid-3 equal-height">
-        <DashboardWidget />
-        <DashboardWidget
-          number="+33"
-          title="Products sold"
-        />
-        <DashboardWidget
-          number="-120"
-          title="Images deleted"
-          type="error"
-        />
-        <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
-        <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
-        <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
-        <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
-        <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
-        <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
-        <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
-        <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
-        <div class="radius-large space-96" style="border: 4px dashed grey;"></div>
-      </div>
-    </div>
-  </section>
-</DefaultLayout>
+<nav class="navbar">
+  <div class="logo">StellarGuard<span>AI</span></div>
+  <ul>
+    <li><a href="/" class="link">Dashboard</a></li>
+    <li><a href="/reports" class="link">Reports</a></li>
+    <li><a href="/users" class="link">Users</a></li>
+    <li><a href="/ai-insights" class="link">AI Insights</a></li>
+    <li><a href="/settings" class="link">Settings</a></li>
+    <li><a href="/logout" class="link">Logout</a></li>
+  </ul>
+</nav>
 
-<script>
-  const date = new Date()
-  document.querySelector('#current-time').innerHTML = `<em>${date.toDateString()}</em>`
+<section class="dashboard">
+  <h1 class="dashboard__title">StellarGuard AI Dashboard</h1>
+
+  <div class="stats">
+    <div class="stat"><h2>Total Transactions</h2><p>12,340</p></div>
+    <div class="stat"><h2>Fraud Detected</h2><p>231</p></div>
+    <div class="stat"><h2>System Accuracy</h2><p>98.7%</p></div>
+    <div class="stat"><h2>Real-Time Events</h2><p>19</p></div>
+  </div>
+
+  <div class="chart">
+    <h2>📈 Fraud Activity (Last 7 Days)</h2>
+    <canvas id="fraudChart" width="600" height="200"></canvas>
+  </div>
+
+  <div class="chart">
+    <h2>📊 Transaction Categories</h2>
+    <canvas id="categoryChart" width="600" height="200"></canvas>
+  </div>
+
+  <div class="live-feed">
+    <h2>🚨 Live Threat Feed</h2>
+    <ul>
+      <li>💥 Wallet 0xA32... attempted fraud - Blocked</li>
+      <li>⚠️ Wallet 0xB44... suspicious behavior detected</li>
+      <li>✅ Wallet 0xC12... verified successfully</li>
+    </ul>
+  </div>
+
+  <div class="simulator">
+    <h2>🤖 Simulate Fraud Attempt</h2>
+    <form>
+      <input type="text" placeholder="Transaction ID" />
+      <input type="number" placeholder="Amount" />
+      <input type="text" placeholder="Source Wallet" />
+      <input type="text" placeholder="Destination Wallet" />
+      <button type="submit">Submit Fraud Attempt</button>
+    </form>
+  </div>
+</section>
+
+<script is:inline>
+  window.addEventListener("load", () => {
+    const ctx1 = document.getElementById("fraudChart").getContext("2d");
+    const ctx2 = document.getElementById("categoryChart").getContext("2d");
+
+    new Chart(ctx1, {
+      type: "line",
+      data: {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        datasets: [{
+          label: "Fraud Attempts",
+          data: [12, 19, 9, 17, 14, 10, 22],
+          borderColor: "#ff71ce",
+          backgroundColor: "rgba(255, 113, 206, 0.2)",
+          tension: 0.4,
+          pointBackgroundColor: "#fff",
+          pointBorderColor: "#ff71ce",
+          fill: true,
+        }]
+      },
+      options: {
+        plugins: { legend: { labels: { color: "#ccc" } } },
+        scales: {
+          x: { ticks: { color: "#ccc" } },
+          y: { ticks: { color: "#ccc" } },
+        }
+      }
+    });
+
+    new Chart(ctx2, {
+      type: "bar",
+      data: {
+        labels: ["Payments", "Withdrawals", "Deposits", "Transfers", "Failed"],
+        datasets: [{
+          label: "Transactions",
+          data: [3200, 1500, 2100, 1700, 400],
+          backgroundColor: [
+            "#00e5ff", "#00ffc6", "#ff71ce", "#f5a623", "#ff3b30"
+          ],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        plugins: { legend: { labels: { color: "#ccc" } } },
+        scales: {
+          x: { ticks: { color: "#ccc" } },
+          y: { ticks: { color: "#ccc" } },
+        }
+      }
+    });
+  });
 </script>
+
+<style lang="scss">
+  body {
+    margin: 0;
+    background: #0e0e1b;
+    color: #e0e0f0;
+    font-family: 'Orbitron', 'Segoe UI', sans-serif;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #161625;
+    border-bottom: 1px solid #00e5ff;
+
+    .logo {
+      font-size: 1.5rem;
+      color: #00e5ff;
+      font-weight: bold;
+
+      span {
+        color: #ff71ce;
+      }
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      li .link {
+        color: #e0f7fa;
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+          color: #00ffc6;
+        }
+      }
+    }
+  }
+
+  .dashboard {
+    padding: 2rem;
+
+    &__title {
+      font-size: 2.5rem;
+      color: #00e5ff;
+      text-shadow: 0 0 10px #00e5ff;
+      margin-bottom: 2rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+
+      .stat {
+        background: #1a1a2f;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+        text-align: center;
+        transition: transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.02);
+        }
+
+        h2 {
+          font-size: 1rem;
+          color: #7fd0ff;
+          margin-bottom: 0.5rem;
+        }
+
+        p {
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: #fff;
+        }
+      }
+    }
+
+    .chart {
+      margin-bottom: 3rem;
+
+      h2 {
+        font-size: 1.25rem;
+        color: #00ffc6;
+        margin-bottom: 1rem;
+      }
+
+      canvas {
+        width: 100%;
+        max-width: 600px;
+        background: #161625;
+        border-radius: 8px;
+        padding: 1rem;
+      }
+    }
+
+    .live-feed {
+      margin-bottom: 3rem;
+
+      h2 {
+        font-size: 1.25rem;
+        color: #00e5ff;
+        margin-bottom: 1rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 1rem;
+        background: #1a1a2f;
+        border-radius: 8px;
+        border: 1px solid #00e5ff;
+        box-shadow: 0 0 10px #00e5ff44;
+        color: #e0f7fa;
+
+        li {
+          padding: 0.5rem 0;
+          border-bottom: 1px solid #2e2e3a;
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+
+    .simulator {
+      h2 {
+        font-size: 1.25rem;
+        color: #ff71ce;
+        margin-bottom: 1rem;
+      }
+
+      form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        input {
+          flex: 1 1 200px;
+          padding: 0.75rem;
+          border-radius: 6px;
+          border: none;
+          background: #222;
+          color: #fff;
+        }
+
+        button {
+          padding: 0.75rem 1.5rem;
+          background: #ff71ce;
+          color: #fff;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: background 0.2s ease;
+
+          &:hover {
+            background: #e256b6;
+          }
+        }
+      }
+    }
+  }
+</style>
