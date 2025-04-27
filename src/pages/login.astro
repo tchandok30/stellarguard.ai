@@ -1,131 +1,177 @@
 ---
-import LoginLayout from '../layouts/LoginLayout.astro'
-import LoginForm from '../components/LoginForm.astro'
-import { Notification } from 'accessible-astro-components'
-import { Icon } from 'astro-icon'
+// src/pages/login.astro
 ---
-
-<LoginLayout title="Login">
-  <section class="bg-neutral-100">
-    <div class="login">
-      <div class="login__inner reveal h-screen">
-        <div class="inner__brand">
-          <div class="bg-neutral-900 radius-large space-8">
-            <img
-              class="brand__logo radius-large"
-              src="/astro-logo.svg"
-              alt=""
-            >
-          </div>
-          <div class="brand__text">
-            <span>Astro Dashboard</span>
-            <span>An Accessible Astro Theme</span>
-          </div>
-        </div>
-        <div class="inner__form space-content">
-          <Notification>
-            <Icon pack="majesticons" name="information-circle-line" /><p class="size-14">Log in using <strong>admin@astro.demo</strong> and <strong>Astronaut570</strong>.</p>          
-          </Notification>
-          <div class="space-content">
-            <h1>Login</h1>
-            <LoginForm />
-          </div>
-        </div>
-        <div class="login__footer text-neutral-700">
-          <p><em>Build fast dashboards, faster.</em></p>
-        </div>
-      </div>
-      <div class="login__background h-screen" />
-    </div>
-  </section>
-</LoginLayout>
-
-<style lang="scss">
-  @use '../assets/scss/base/breakpoint' as *;
-  @use '../assets/scss/base/size' as *;
-  @use '../assets/scss/base/space' as *;
-
-  .login {
-    display: grid;
-
-    @include breakpoint(medium) {
-      grid-template-columns: 550px 2fr;
-    }
-
-    .login__inner {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: $space-48;
-      padding: $space-24;
-      z-index: 1;
-      
-      @include breakpoint(medium) {
-        padding: $space-48 $space-96;
-        box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
-      }
-    }
-
-    .inner__brand {
-      display: flex;
-      align-items: center;
-      gap: $space-16;
-    }
-
-    .brand__logo {
-      max-width: 50px;
-    }
-
-    .brand__text {
-      display: flex;
-      flex-direction: column;
-      gap: $space-2;
-
-      > :first-child {
-        font-weight: bold;
-        @include size-20;
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | StellarGuard AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(ellipse at top, #0a0f23, #000000 80%);
+        font-family: 'Orbitron', sans-serif;
+        overflow: hidden;
+        position: relative;
       }
 
-      > :last-child {
-        @include size-14;
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: repeating-linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.05) 0px,
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px,
+          transparent 50px
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.05) 0px,
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px,
+          transparent 50px
+        );
+        z-index: 0;
       }
-    }
 
-    .login__background {
-      display: none;
-      background-color: #000;
-      background-image: url("/login-background.webp");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      .login-container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 400px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 2px solid rgba(99, 102, 241, 0.4);
+        border-radius: 1rem;
+        padding: 2.5rem;
+        box-shadow: 0 0 30px #6366f1;
+        text-align: center;
+        animation: fadeIn 1s ease-out;
+      }
 
-      @include breakpoint(medium) {
+      .login-title {
+        font-size: 2.2rem;
+        color: #00ffe1;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 0 10px #00ffe1;
+      }
+
+      .login-subtitle {
+        font-size: 1rem;
+        color: #aaaaaa;
+        margin-bottom: 2rem;
+      }
+
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        text-align: left;
+      }
+
+      .form-group label {
+        font-size: 0.8rem;
+        color: #cccccc;
+        margin-bottom: 0.5rem;
         display: block;
       }
-    }
 
-    .reveal {
-      animation: reveal 0.3s ease-in;
-    }
-
-    .login__footer {
-      padding-bottom: $space-24;
-
-      @include breakpoint(medium) {
-        padding-bottom: 0;
+      .form-group input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #4f46e5;
+        border-radius: 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        font-size: 0.9rem;
       }
-    }
-  }
 
-  @keyframes reveal {
-    0% {
-      opacity: 0;
-      transform: translateY(-1rem);
-    }
+      .form-group input::placeholder {
+        color: #999;
+      }
 
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-</style>
+      .login-button {
+        padding: 0.8rem;
+        border: none;
+        border-radius: 0.5rem;
+        background: linear-gradient(90deg, #6366f1, #00ffe1);
+        color: white;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 0 15px #00ffe1;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .login-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px #00ffe1;
+      }
+
+      .login-footer {
+        margin-top: 2rem;
+        font-size: 0.75rem;
+        color: #666;
+      }
+
+      @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-container">
+      <h2 class="login-title">StellarGuard AI</h2>
+      <p class="login-subtitle">Access the Future Securely</p>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="you@stellar.ai" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="********" />
+        </div>
+
+        <button type="submit" class="login-button">Engage</button>
+      </form>
+
+      <p class="login-footer">&copy; 2025 StellarGuard AI. Cosmic Security. Galactic Precision.</p>
+    </div>
+
+    <script is:inline>
+      const form = document.getElementById('loginForm');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        
+        // Hardcoded email and password
+        const correctEmail = "admin@stellar.ai";
+        const correctPassword = "stellar123";
+
+        if (email === correctEmail && password === correctPassword) {
+          // Redirect to index.astro
+          window.location.href = "/";
+        } else {
+          alert("Invalid Email or Password. Access Denied!");
+        }
+      });
+    </script>
+  </body>
+</html>
